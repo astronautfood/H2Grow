@@ -8,7 +8,7 @@ const dbRef = firebase.database().ref('/items');
 let lastWatered = moment();
 
 
-
+//variables for calendar input choices
 const thirtyDaysLater = lastWatered.add(30, 'days');
 const threeWeeksLater = lastWatered.add(21, 'days');
 const twoWeeksLater = lastWatered.add(14, 'days');
@@ -36,6 +36,8 @@ function getWaterDate(time) {
 	}
 };
 
+
+//form component
 class Form extends React.Component {
 	render() {
 		return (
@@ -108,9 +110,7 @@ class App extends React.Component {
 			selectedTime: '',
 			selectedDate: '',
 		};
-		// console.log(plantType)
 
-		// this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleOptionChange = this.handleOptionChange.bind(this);
 		this.handleChangeText = this.handleChangeText.bind(this);
@@ -151,6 +151,7 @@ class App extends React.Component {
 		});
 	}
 
+	//convert milliseconds
 	handleOptionChange(event) {
 		this.setState ({
 			selectedTime: event.target.value,
@@ -174,6 +175,7 @@ class App extends React.Component {
 		});
 	}
 
+	//mount firebase
 	componentDidMount() {
 		dbRef.on('value', (snapshot) => {
 			const newItemsArray = [];
@@ -198,6 +200,7 @@ class App extends React.Component {
 			<div className='app'>
 				<header>
 					<img src="../dev/assets/h2growWhite.svg" />
+					<p className="instruction">Keep better track of watering your plants with H2Grow, an automatic countdown that tells you when they need water!</p>
 				</header>
 				<div className="container">
 					<div className="formWrap">
@@ -222,6 +225,7 @@ class App extends React.Component {
 										const waterTime = lastWatered.add(getWaterDate(item.water), 'days');
 										const whenToWater = moment().to(waterTime);
 
+										//create dynamic user cards
 										 return (
 										<li key={i} >
 											<p className="today">{moment().format('LLLL')}</p>
